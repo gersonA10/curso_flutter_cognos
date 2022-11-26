@@ -2,6 +2,7 @@ import 'package:components_app/models/menu_option.dart';
 import 'package:components_app/screens/alert_screen.dart';
 import 'package:components_app/screens/card_screen.dart';
 import 'package:components_app/screens/screens.dart';
+import 'package:components_app/screens/texts_screen.dart';
 import 'package:flutter/material.dart';
 
 class AppRoutes {
@@ -41,6 +42,12 @@ class AppRoutes {
       screen: const AlertScreen(),
       icon: Icons.add_alert_sharp,
       title: 'Alert',
+    ),
+    MenuOption(
+      route: 'text',
+      screen: TextScreen(),
+      icon: Icons.text_fields_sharp,
+      title: 'Text',
     ),
   ];
 
