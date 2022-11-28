@@ -1,5 +1,6 @@
 import 'package:components_app/models/menu_option.dart';
 import 'package:components_app/screens/alert_screen.dart';
+import 'package:components_app/screens/animated_screen.dart';
 import 'package:components_app/screens/card_screen.dart';
 import 'package:components_app/screens/screens.dart';
 import 'package:components_app/screens/texts_screen.dart';
@@ -48,6 +49,12 @@ class AppRoutes {
       screen: TextScreen(),
       icon: Icons.text_fields_sharp,
       title: 'Text',
+    ),
+    MenuOption(
+      route: 'animated',
+      screen: const AnimatedScreen(),
+      icon: Icons.play_circle_outline_sharp,
+      title: 'Animated Container',
     ),
   ];
 
