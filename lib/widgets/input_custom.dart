@@ -6,6 +6,7 @@ class InputCustom extends StatelessWidget {
   final IconData icon;
   final TextInputType? textInputType;
   final bool obscureText;
+  final String? Function(String?)? validator;
 
   final String formProperty;
   final Map<String, dynamic> formValues;
@@ -18,21 +19,24 @@ class InputCustom extends StatelessWidget {
     this.obscureText = false,
     required this.formProperty,
     required this.formValues,
+    this.validator,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      //TEXTFORM FIELD
       child: TextFormField(
         obscureText: obscureText,
         keyboardType: textInputType,
         cursorColor: AppTheme.primary,
-        initialValue: "",
+        //initialValue: "VALOR INICIAL",
+        // onChanged: (value) {
+        //   print(value);
+        // },
         onChanged: (value) => formValues[formProperty] = value,
-        validator: (value) {
-          return value!.length < 3 ? "Minimo de 3 letras" : null;
-        },
+        validator: validator,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         //controller: _controller,
         decoration: InputDecoration(

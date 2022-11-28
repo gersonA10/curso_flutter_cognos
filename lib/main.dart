@@ -1,5 +1,4 @@
 import 'package:components_app/routes/app_routes.dart';
-import 'package:components_app/routes/app_routes.dart';
 import 'package:components_app/theme/theme_data.dart';
 import 'package:flutter/material.dart';
 

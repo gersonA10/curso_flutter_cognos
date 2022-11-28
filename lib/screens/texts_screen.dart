@@ -1,3 +1,4 @@
+import 'package:components_app/screens/screens.dart';
 import 'package:components_app/widgets/input_custom.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,7 @@ class TextScreen extends StatelessWidget {
 
     //los datos de nuestro map los remplazaremos por los datos que escribamos
     final Map<String, String> formValues = {
-      "email": "Gerson",
+      "email": "gerson@gmail.com",
       "password": "12345",
       "role": "Admin",
     };
@@ -31,26 +32,15 @@ class TextScreen extends StatelessWidget {
             key: myFormKey,
             child: Column(
               children: [
-                /*
-                EJERCICIO:
-
-                Crear un formulario de registro
-                Donde se piden los sihuientes datos:
-
-                nombre,
-                apellido,
-                telefono,
-                password,
-
-
-
-                */
                 InputCustom(
                   hinText: "email",
                   icon: Icons.email,
                   textInputType: TextInputType.emailAddress,
                   formProperty: 'email',
                   formValues: formValues,
+                  validator: (value) {
+                    return value!.length < 3 ? "Minimo 3 Letras" : null;
+                  },
                 ),
                 InputCustom(
                   hinText: "password",
@@ -58,6 +48,9 @@ class TextScreen extends StatelessWidget {
                   obscureText: true,
                   formProperty: 'password',
                   formValues: formValues,
+                  validator: (value) {
+                    return value!.length < 6 ? "Minimo 6 Letras" : null;
+                  },
                 ),
 
                 DropdownButtonFormField<String>(
@@ -80,7 +73,13 @@ class TextScreen extends StatelessWidget {
                     ),
                   ],
                   onChanged: (value) {
-                    formValues["role"] = value ?? "Admin";
+                    formValues["role"] = value ?? "user";
+                  },
+                  validator: (value) {
+                    // if (value == null) {
+                    //   print("ESTA VACIO");
+                    // }
+                    return value == null ? "Esta vacio" : null;
                   },
                 ),
 
@@ -93,11 +92,36 @@ class TextScreen extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
+                    //TODO: AGREGAR VALIDACION DEL BOTON
                     //DESACTIVAR EL TELCADO
-                    FocusScope.of(context).requestFocus(FocusNode());
+                    //FocusScope.of(context).requestFocus(FocusNode());
                     // si no es valido hacemos un return
+
                     if (!myFormKey.currentState!.validate()) {
-                      print("FORMULARIO NO VALIDO");
+                      showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: ((context) {
+                          return AlertDialog(
+                            //backgroundColor: AppTheme.primary,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            elevation: 20.0,
+                            //title: Text("LLENA LOS CAMPOS"),
+                            //icon: FlutterLogo(),
+                            content: Text("LLENA LOS CAMPOS REQUIRIDOS"),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text("Ok"),
+                              ),
+                            ],
+                          );
+                        }),
+                      );
                       return;
                     }
                     // * imprimir valores del formulario
