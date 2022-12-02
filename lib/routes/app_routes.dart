@@ -2,7 +2,9 @@ import 'package:components_app/models/menu_option.dart';
 import 'package:components_app/screens/alert_screen.dart';
 import 'package:components_app/screens/animated_screen.dart';
 import 'package:components_app/screens/card_screen.dart';
+import 'package:components_app/screens/listview_builder.dart';
 import 'package:components_app/screens/screens.dart';
+import 'package:components_app/screens/slider_screen.dart';
 import 'package:components_app/screens/texts_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -55,6 +57,18 @@ class AppRoutes {
       screen: const AnimatedScreen(),
       icon: Icons.play_circle_outline_sharp,
       title: 'Animated Container',
+    ),
+    MenuOption(
+      route: 'slider',
+      screen: const SliderScreen(),
+      icon: Icons.slideshow_outlined,
+      title: 'Silder',
+    ),
+    MenuOption(
+      route: 'listViewBuilder',
+      screen: const ListViewBuilderPage(),
+      icon: Icons.line_style_rounded,
+      title: 'ListViewBuilder',
     ),
   ];
 

@@ -1,9 +1,26 @@
-import 'package:components_app/screens/screens.dart';
+import 'dart:developer';
+
 import 'package:components_app/widgets/input_custom.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class TextScreen extends StatelessWidget {
+class TextScreen extends StatefulWidget {
   const TextScreen({super.key});
+
+  @override
+  State<TextScreen> createState() => _TextScreenState();
+}
+
+class _TextScreenState extends State<TextScreen> {
+  //Variable para la validacion
+  bool _onClick = false;
+  //Creamos un getter que recibira nuestra variable
+  bool get onClick1 => _onClick;
+  //Crearmos un setter para luego en nuestro boton cambiendo el valor de nuestra variable
+  set onClick(bool value) {
+    _onClick = value;
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,48 +102,56 @@ class TextScreen extends StatelessWidget {
 
                 //BOTON GUARDAR
                 ElevatedButton(
+                  onPressed: onClick1
+                      ? null
+                      : () async {
+                          //TODO: AGREGAR VALIDACION DEL BOTON
+                          //DESACTIVAR EL TELCADO
+                          //FocusScope.of(context).requestFocus(FocusNode());
+                          // si no es valido hacemos un return
+
+                          if (!myFormKey.currentState!.validate()) {
+                            showDialog(
+                              barrierDismissible: false,
+                              context: context,
+                              builder: ((context) {
+                                return AlertDialog(
+                                  //backgroundColor: AppTheme.primary,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  elevation: 20.0,
+                                  //title: Text("LLENA LOS CAMPOS"),
+                                  //icon: FlutterLogo(),
+                                  content: Text("LLENA LOS CAMPOS REQUIRIDOS"),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text("Ok"),
+                                    ),
+                                  ],
+                                );
+                              }),
+                            );
+                            return;
+                          }
+                          // * imprimir valores del formulario
+                          print(formValues);
+                          //print(onClick);
+                          //aca lo desactivamos
+                          onClick = true;
+                          await Future.delayed(const Duration(seconds: 2));
+                          onClick = false;
+                          Navigator.pop(context);
+                        },
                   child: const SizedBox(
                     width: double.infinity,
                     child: Center(
                       child: Text("Guardar"),
                     ),
                   ),
-                  onPressed: () {
-                    //TODO: AGREGAR VALIDACION DEL BOTON
-                    //DESACTIVAR EL TELCADO
-                    //FocusScope.of(context).requestFocus(FocusNode());
-                    // si no es valido hacemos un return
-
-                    if (!myFormKey.currentState!.validate()) {
-                      showDialog(
-                        barrierDismissible: false,
-                        context: context,
-                        builder: ((context) {
-                          return AlertDialog(
-                            //backgroundColor: AppTheme.primary,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            elevation: 20.0,
-                            //title: Text("LLENA LOS CAMPOS"),
-                            //icon: FlutterLogo(),
-                            content: Text("LLENA LOS CAMPOS REQUIRIDOS"),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text("Ok"),
-                              ),
-                            ],
-                          );
-                        }),
-                      );
-                      return;
-                    }
-                    // * imprimir valores del formulario
-                    print(formValues);
-                  },
                 )
                 //EL TEXTFIELD ES CUANDO NO USAMOS FORMULARIO
               ],
