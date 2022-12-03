@@ -34,14 +34,18 @@ class _SliderScreenState extends State<SliderScreen> {
                   }
                 : null,
           ),
-          Checkbox(
+          CheckboxListTile(
+            title: const Text("Habilitar cambio tamaño"),
+            subtitle: const Text("Subtitulo"),
             value: _checkBoxOn,
             onChanged: ((value) {
               _checkBoxOn = value ?? true;
               setState(() {});
             }),
           ),
-          Switch(
+          SwitchListTile.adaptive(
+            title: const Text("Habilitar"),
+            subtitle: const Text("Subtitulo"),
             value: _switch,
             onChanged: ((value) {
               _switch = value;
@@ -53,7 +57,8 @@ class _SliderScreenState extends State<SliderScreen> {
               "https://b.fssta.com/uploads/application/soccer/headshots/711.png",
             ),
             fit: BoxFit.contain,
-            width: _value,
+            // width: _value,
+            height: _value,
           )
         ],
       ),

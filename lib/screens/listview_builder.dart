@@ -16,6 +16,7 @@ class _ListViewBuilderPageState extends State<ListViewBuilderPage> {
   //PARA LISTVIEW TENEMOS QUE ESCUCHAR LOS CAMBIO QUE TAN ARRIBA O TAN ABAJO
   //controlaremos el listview y necestamos escuchar el scroll
   final ScrollController scrollController = ScrollController();
+
   bool isLoading = false;
 
   @override
@@ -29,7 +30,7 @@ class _ListViewBuilderPageState extends State<ListViewBuilderPage> {
       if ((scrollController.position.pixels) >=
           //cual es lo maximo que pued llegar
           (scrollController.position.maxScrollExtent)) {
-        //add10();
+        //print(scrollController.position.pixels);
         fetchData();
         //print(add10);
       }
@@ -79,47 +80,88 @@ class _ListViewBuilderPageState extends State<ListViewBuilderPage> {
     add10();
   }
 
+  double _width = 400;
+
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       body: MediaQuery.removePadding(
         context: context,
         removeTop: true,
         removeBottom: true,
-        //permite pioner widgets encima de otro
+        //permite poner widgets encima de otro
         child: Stack(
           children: [
             RefreshIndicator(
               //cuando se resuelva un future se cargara el refrsh
               onRefresh: onRefresh,
-              child: ListView.builder(
-                controller: scrollController,
-                itemCount: list.length,
-                itemBuilder: ((context, index) {
-                  return Column(
-                    children: [
-                      //https://picsum.photos
-                      FadeInImage(
-                        width: double.infinity,
-                        height: 300,
-                        placeholder: const AssetImage("assets/gif.gif"),
-                        fit: BoxFit.cover,
-                        image: NetworkImage(
-                          "https://picsum.photos/500/300?image=${list[index]}",
-                        ),
-                      ),
-                    ],
-                  );
-                }),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      controller: scrollController,
+                      itemCount: list.length,
+                      itemBuilder: ((context, index) {
+                        final _position = list.indexOf(index).toDouble();
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: Column(
+                            children: [
+                              //https://picsum.photos
+                              Card(
+                                color: AppTheme.primary,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Column(
+                                    children: [
+                                      FadeInImage(
+                                        width: double.infinity,
+                                        height: _width,
+                                        placeholder:
+                                            const AssetImage("assets/gif.gif"),
+                                        fit: BoxFit.cover,
+                                        image: NetworkImage(
+                                          //https://picsum.photos/id/237/200/300
+                                          "https://picsum.photos/500/300?image=${list[index]}",
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 50,
+                                        child: Center(
+                                          child: Text(
+                                            "Numero de Imagen: ${list[index].toString()}",
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
+                    ),
+                  ),
+                ],
               ),
             ),
             if (isLoading)
               Positioned(
                 bottom: 40,
                 //el ancho que tenga el dispositivo, necesitamos la mitad y le restamos 30 pixeles
-                left: MediaQuery.of(context).size.width * 0.5 - 30,
+                left: size.width * 0.5 - 30,
                 child: const _LoadingIcon(),
-              )
+              ),
           ],
         ),
 
@@ -156,11 +198,11 @@ class _LoadingIcon extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.9),
-        //borderRadius: BorderRadius.circular(30),
+        // borderRadius: BorderRadius.circular(400),
         shape: BoxShape.circle,
       ),
-      height: 50,
-      width: 50,
+      height: 60,
+      width: 60,
       child: const CircularProgressIndicator(
         color: AppTheme.primary,
       ),

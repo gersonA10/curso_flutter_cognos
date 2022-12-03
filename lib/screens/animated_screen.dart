@@ -10,6 +10,7 @@ class AnimatedScreen extends StatefulWidget {
 }
 
 class _AnimatedScreenState extends State<AnimatedScreen> {
+  //
   double _width = 50;
   double _height = 50;
   Color _color = Colors.indigo;
@@ -56,6 +57,7 @@ class _AnimatedScreenState extends State<AnimatedScreen> {
           //https://api.flutter.dev/flutter/animation/Curves-class.html
 
           curve: Curves.easeOutCubic,
+          //
           height: _width,
           width: _height,
           decoration: BoxDecoration(

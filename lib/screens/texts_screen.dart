@@ -1,7 +1,4 @@
-import 'dart:developer';
-
 import 'package:components_app/widgets/input_custom.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TextScreen extends StatefulWidget {
@@ -16,7 +13,7 @@ class _TextScreenState extends State<TextScreen> {
   bool _onClick = false;
   //Creamos un getter que recibira nuestra variable
   bool get onClick1 => _onClick;
-  //Crearmos un setter para luego en nuestro boton cambiendo el valor de nuestra variable
+  //Crearmos un setter para luego en nuestro boton podamos cambiar el valor de nuestra variable
   set onClick(bool value) {
     _onClick = value;
     setState(() {});
@@ -123,13 +120,14 @@ class _TextScreenState extends State<TextScreen> {
                                   elevation: 20.0,
                                   //title: Text("LLENA LOS CAMPOS"),
                                   //icon: FlutterLogo(),
-                                  content: Text("LLENA LOS CAMPOS REQUIRIDOS"),
+                                  content:
+                                      const Text("LLENA LOS CAMPOS REQUIRIDOS"),
                                   actions: [
                                     TextButton(
                                       onPressed: () {
                                         Navigator.pop(context);
                                       },
-                                      child: Text("Ok"),
+                                      child: const Text("Ok"),
                                     ),
                                   ],
                                 );
